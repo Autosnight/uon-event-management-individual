@@ -1,0 +1,12 @@
+@import './login.css';
+.form-container {
+  background-color: #e3f2fd;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* 控制垂直间距 */
+  margin-top: 10px;
+}
+

@@ -1,0 +1,22 @@
+.form-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-button.green {
+  background-color: #4caf50;
+  color: white;
+}
+
+.form-button.blue {
+  background-color: #2196f3;
+  color: white;
+}
+
+.form-button + .form-button {
+  margin-top: 10px;
+}
