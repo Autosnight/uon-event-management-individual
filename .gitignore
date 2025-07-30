@@ -9,10 +9,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # dotenv environment variables
-.env
-.env.local
-backend/.env
-frontend/.env
+#.env
+#.env.local
+#backend/.env
+#frontend/.env
 
 # Build output
 /dist
