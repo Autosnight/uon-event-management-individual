@@ -1,0 +1,10 @@
+.cm-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; z-index: 2000; }
+.cm-card { width: min(520px, 92vw); background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.cm-title { margin: 0 0 8px; font-size: 18px; }
+.cm-message { margin: 0 0 16px; color: #444; line-height: 1.6; }
+.cm-actions { display: flex; justify-content: flex-end; gap: 12px; }
+.cm-btn { padding: 8px 14px; border-radius: 8px; border: none; cursor: pointer; }
+.cm-primary { background: #2563eb; color: #fff; }
+.cm-danger  { background: #dc2626; color: #fff; }
+.cm-warning { background: #d97706; color: #fff; }
+.cm-ghost   { background: #f3f4f6; color: #111827; }

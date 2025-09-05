@@ -1,7 +1,7 @@
 .login-wrapper {
   position: relative;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -24,7 +24,6 @@ position: relative;
 .form-input {
   width: 100%;
   padding: 8px;
-  margin: 10px 0;
   box-sizing: border-box;
 }
 
@@ -37,17 +36,33 @@ position: relative;
   cursor: pointer;
 }
 
-.login-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-image: url('/europeana-lByMDv23vLg-unsplash.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-  opacity: 0.65;
-   pointer-events: none;
+/* 底部小字链接样式 */
+.auth-links {
+  margin-top: 10px;
+  text-align: left;          /* 想居中可改 center */
 }
+
+.auth-links p {
+  margin: 6px 0 0;
+  font-size: 14px;           /* 小号文字 */
+  line-height: 1.45;
+  color: rgba(11, 18, 32, 0.9);   /* 深一点，清晰 */
+}
+
+.auth-links a {
+  color: #0ea5e9;                 /* 高亮蓝 */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+.auth-links a:hover { opacity: 0.9; }
+
+.auth-links a:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* 让按钮与底部链接距离更紧凑一点 */
+.form-container .button-group { margin-bottom: 8px; }

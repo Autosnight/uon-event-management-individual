@@ -1,0 +1,45 @@
+.ticket-table-wrap {
+  margin-top: 8px;
+}
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+.ticket-table th,
+.ticket-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  vertical-align: middle;
+}
+.ticket-table th {
+  text-align: center;
+  font-weight: 600;
+  opacity: 0.85;
+}
+.ticket-radio {
+  display: inline-flex;
+  align-items: left;
+  gap: 8px;
+}
+
+.ticket-radio input[type="radio"] {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.ticket-table td.num,
+.ticket-table td.price {
+  text-align: center;
+  width: 110px;
+}
+
+.ticket-table colgroup col:nth-child(1) {
+  width: 60%;
+}
+.ticket-table colgroup col:nth-child(2) {
+  width: 20%;
+}
+.ticket-table colgroup col:nth-child(3) {
+  width: 20%;
+}

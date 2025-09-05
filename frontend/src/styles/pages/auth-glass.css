@@ -1,0 +1,250 @@
+/* 页面舞台 */
+.auth-page {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #f1f4f9, #dff1ff);
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
+}
+
+/* 背景彩色光团 */
+.auth-color {
+  position: absolute;
+  filter: blur(150px);
+}
+.auth-color.c1 {
+  top: -35vmin;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60vmin;
+  height: 60vmin;
+  background: #ff359b;
+}
+.auth-color.c2 {
+  bottom: -15vmin;
+  left: 8vmin;
+  width: 50vmin;
+  height: 50vmin;
+  background: #fffd87;
+}
+.auth-color.c3 {
+  bottom: 5vmin;
+  right: 8vmin;
+  width: 50vmin;
+  height: 50vmin;
+  background: #00d2ff;
+}
+
+/* 外层容器 + 漂浮小方块 */
+.auth-box {
+  position: relative;
+}
+.auth-square {
+  position: absolute;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-right-color: rgba(255, 255, 255, 0.2);
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  animation: auth-float 10s linear infinite;
+  animation-delay: calc(-1s * var(--i));
+}
+@keyframes auth-float {
+  0%,
+  100% {
+    transform: translateY(-40px);
+  }
+  50% {
+    transform: translateY(40px);
+  }
+}
+/* 漂浮块位置（可随意调） */
+.auth-square.s1 {
+  top: -50px;
+  right: -60px;
+  width: 100px;
+  height: 100px;
+}
+.auth-square.s2 {
+  top: 150px;
+  left: -100px;
+  width: 120px;
+  height: 120px;
+  z-index: 2;
+}
+.auth-square.s3 {
+  bottom: 50px;
+  right: -60px;
+  width: 80px;
+  height: 80px;
+  z-index: 2;
+}
+.auth-square.s4 {
+  bottom: -80px;
+  left: 100px;
+  width: 50px;
+  height: 50px;
+}
+.auth-square.s5 {
+  top: -90px;
+  left: 140px;
+  width: 60px;
+  height: 60px;
+}
+
+/* 玻璃卡片（给你的 .form-container 套这个类即可） */
+.auth-card {
+  position: relative;
+  width: min(92vw, 420px);
+  min-height: 420px;
+  padding: 40px;
+  color: #fff;
+
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-right-color: rgba(255, 255, 255, 0.2);
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.auth-card h2 {
+  position: relative;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 28px;
+}
+.auth-card h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 84px;
+  height: 4px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+/* 兼容你的 ValidatedInput：默认类名就是 .form-input */
+.auth-card .form-input {
+  width: 100%;
+  padding: 12px 20px;
+  color: #fff;
+  border-radius: 35px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-right-color: rgba(255, 255, 255, 0.25);
+  border-bottom-color: rgba(255, 255, 255, 0.25);
+  outline: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+.auth-card .form-input::placeholder {
+  color: #fff;
+  opacity: 0.9;
+}
+
+/* 校验错误提示的可读性（你的组件会加 vf-error-*） */
+.auth-card .vf-error-border {
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.25) inset;
+}
+.auth-card .vf-error-tip {
+  color: #fff;
+  opacity: 0.95;
+}
+
+/* 按钮区：让 Login 像示例一样白底圆角 */
+.auth-card .button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+.auth-card .button-group button {
+  border-radius: 28px !important;
+  padding: 10px 18px !important;
+  font-weight: 600;
+}
+/* 第一个按钮（Login）白底灰字 */
+.auth-card .button-group button:first-child {
+  background: #fff !important;
+  color: #555 !important;
+  border: none !important;
+}
+/* 第二个按钮（Register）做成淡白半透明 */
+.auth-card .button-group button + button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+}
+
+/* 链接文案（忘记密码 / 去注册） */
+.auth-links {
+  margin-top: 8px;
+  color: #fff;
+}
+.auth-links p {
+  margin: 6px 0;
+}
+.auth-links a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+}
+.auth-links a:hover {
+  opacity: 0.85;
+}
+
+/* 让卡片里的文字整体用深色，提升可读性 */
+.auth-card {
+  color: #0f172a; /* slate-900 */
+  background: rgba(255, 255, 255, 0.38); /* 提升卡片不透明度 */
+}
+
+/* 标题更清晰一点 */
+.auth-card h2 {
+  color: #0b1220;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* 输入框：深色文字 + 更实的半透明 */
+.auth-card .form-input {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  caret-color: #0f172a;
+}
+.auth-card .form-input::placeholder {
+  color: rgba(15, 23, 42, 0.55); /* 深一点的 placeholder */
+}
+
+/* 按钮文案也用深色，白底更明显 */
+.auth-card .button-group button:first-child {
+  background: #fff !important;
+  color: #0f172a !important;
+}
+.auth-card .button-group button + button {
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #0f172a !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+}
+
+/* 底部链接也改为深色 */
+.auth-links,
+.auth-links a {
+  color: #0f172a;
+}
+.auth-links a {
+  border-bottom-color: rgba(15, 23, 42, 0.55);
+}

@@ -1,0 +1,436 @@
+.wizard-wrap {
+  display: grid;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: 100%;
+  grid-template-columns: var(--width-aside) calc(100% - var(--width-aside));
+  --width-aside: 10%;
+}
+
+.wizard-aside {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  border-right: 10px solid #eee;
+  padding: 24px 12px;
+}
+
+.wizard-main {
+  position: relative;
+  --gap: 12px;
+}
+
+.wizard-body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(560px, 80vw);
+}
+
+.wizard-navrow {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  left: 50%;
+  top: calc(50% + (var(--body-height) / 2) + var(--gap));
+  transform: translateX(-50%);
+  width: var(--body-width);
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 44px;
+  height: 44px;
+}
+
+.arrow-btn {
+  width: 100%;
+  /* height: 100%; */
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.arrow-btn > img {
+  width: 100%;
+  height: 100%;
+}
+
+.event-form-container {
+  background-color: #ffffff;
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.event-form-container h2 {
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+  padding: 18px 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.event-form {
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.event-form label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  padding: 14px 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  font-weight: bold;
+  font-size: 0.75rem;
+  color: #444;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.event-form label.ticket-label {
+  display: block;
+  position: relative;
+  width: calc(100% - 100px);
+}
+
+.event-form label input,
+.event-form label textarea {
+  margin-top: 6px;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #333;
+  width: 100%;
+  outline: none;
+}
+
+.event-form input:focus,
+.event-form textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.event-form button {
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.event-form button:hover {
+  background-color: #357abd;
+}
+
+.ticket-label .ticket-type-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.ticket-label .ticket-type-row input {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.95rem;
+
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.event-form label.ticket-label .add-btn,
+.event-form label.ticket-label .remove-btn {
+  position: absolute;
+  right: -58px;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  padding: 5px 12px;
+  border: none;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #ccc;
+  color: #333;
+}
+
+.remove-btn {
+  background-color: #e74c3c;
+}
+
+.event-form button[type="submit"] {
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.event-form button[type="submit"]:hover {
+  opacity: 0.9;
+}
+
+.event-form button[type="button"] {
+  background-color: #ccc;
+  color: #333;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.wizard-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.wizard-progress {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0;
+}
+.field > label {
+  font-size: 14px;
+  color: #374151;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  outline: none;
+}
+.field input:focus,
+.field textarea:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+}
+.big-input {
+  font-size: 22px;
+  padding: 16px 14px;
+}
+.ticket-grid {
+  display: grid;
+  grid-template-columns: 1fr 120px 120px 72px;
+  gap: 8px;
+  align-items: center;
+}
+.ticket-grid .th {
+  font-size: 13px;
+  color: #6b7280;
+}
+.ticket-grid .actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.btn {
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #f3f4f6;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+.btn-secondary {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #4338ca;
+}
+.btn-ghost {
+  background: #fff;
+  border-color: #e5e7eb;
+}
+.wizard-actions {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px dashed #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.wizard-actions .left,
+.wizard-actions .right {
+  display: flex;
+  gap: 8px;
+}
+@media (max-width: 480px) {
+  .ticket-grid {
+    grid-template-columns: 1fr 90px 90px 64px;
+  }
+  .big-input {
+    font-size: 20px;
+  }
+}
+
+/* —— 内嵌标签样式（像 p1 那样） —— */
+.field.field-inset {
+  position: relative;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #f7f7f8; /* 贴近你 p1 的浅灰底 */
+  padding: 24px 14px 12px; /* 上留白给 label */
+}
+
+.field.field-inset:focus-within {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+}
+
+.inset-label {
+  position: absolute;
+  top: 6px;
+  left: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #6b7280;
+  text-transform: uppercase; /* 维持 VENUE/DATE 的大写风格 */
+}
+
+/* 覆盖通用 .field input 的边框，让输入看起来“在框里” */
+.field.field-inset input,
+.field.field-inset textarea {
+  border: none !important;
+  background: transparent;
+  padding: 0; /* 由外层控制内边距 */
+  margin: 0;
+  outline: none;
+  width: 100%;
+  font-size: 15px;
+}
+
+/* 单独给输入本体一个类，便于选择器更明确 */
+.inset-input {
+  width: 100%;
+}
+
+/* 日期/时间右侧图标留点空隙 */
+.inset-input[type="date"],
+.inset-input[type="time"] {
+  padding-right: 8px;
+}
+
+.field.field-inset input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.wizard-layout {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  min-height: 60vh;
+}
+
+.v-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.v-steps li {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  color: #64748b;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  position: relative;
+}
+.v-steps li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  width: 2px;
+  height: 14px;
+  background: #e5e7eb;
+  transform: translateX(-50%);
+}
+.v-steps li.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+.v-steps li.done {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+
+.arrow-btn.primary.submit {
+  padding: 0 16px;
+  width: auto;
+  min-width: 88px;
+  border-radius: 12px;
+  font-size: 15px;
+}
+.arrow-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Cancel 做成文本按钮 */
+.link-cancel {
+  background: none;
+  border: none;
+  color: #6b7280;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+/* 左箭头在第 1 步隐藏但保留占位，保持对齐 */
+/* .arrow-btn[disabled] {
+  visibility: hidden;
+} */
