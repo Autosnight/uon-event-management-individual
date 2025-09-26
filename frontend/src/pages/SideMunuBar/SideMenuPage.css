@@ -1,0 +1,24 @@
+
+
+.sidebar-area {
+  border: 1px solid #000;
+  border-radius: 8px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.sidebar-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.sidebar-header-2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.profile-section-content {
+  margin-bottom: 10px;
+}

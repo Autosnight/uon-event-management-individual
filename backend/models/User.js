@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
 
   isVerified: {type: Boolean, default: false},
   verifyToken: String,
-  verifyTokenExpires: Date
+  verifyTokenExpires: Date,
+  is2FAEnabled: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('User', userSchema);

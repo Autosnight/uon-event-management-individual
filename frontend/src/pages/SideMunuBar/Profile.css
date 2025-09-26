@@ -1,0 +1,22 @@
+.profile-wrapper {
+  text-align: left;
+}
+
+.profile-badge-wrapper {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  background-color: bisque;
+}
+
+.profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #3b82f6;
+  background: transparent;
+}
+
+.profile-pic-area {
+  display:flex;
+  flex-direction: row;
+}

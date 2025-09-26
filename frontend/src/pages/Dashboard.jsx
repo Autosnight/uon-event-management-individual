@@ -9,6 +9,7 @@ import RegisterEvent from "./RegisterEvent";
 import { useStateContext } from "../context/StateContext";
 
 import TopNavBar from "../components/TopNavBar";
+import SideMenuBar from "../components/menuBar/SideMenuBar";
 import Homepage from "./Homepage";
 
 import AboutPage from "./AboutPage";
@@ -26,6 +27,8 @@ export default function Dashboard() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [userRegistrations, setUserRegistrations] = useState([]);
   const [myCreatedEvents, setMyCreatedEvents] = useState([]);
+  const [sideBarOpen, setSideBarOpen] = useState(true);
+  const handleSwitchMenu = () => setSideBarOpen(v => !v);
 
   const navigate = useNavigate();
 
@@ -90,58 +93,39 @@ export default function Dashboard() {
       });
   }, [activeSection, navigate]);
 
-  // useEffect(() => {
-  //   if (activeSection === "create") {
-  //     navigate("/create-event");
-  //   }
-  // }, [activeSection, navigate]);
 
-  const handleLogout = () => {
-    ButtonConfirm({
-      title: "Sign out",
-      message: "Are you sure you want to sign out?",
-      confirmText: "Sign out",
-      cancelText: "Cancel",
-    }).then((ok) => {
-      if (!ok) return;
-      localStorage.removeItem("token");
-      navigate("/");
-    });
-  };
 
   return (
     <div className="dashboard-container">
-      <TopNavBar
-        role={role}
-        isOrganizer={isOrganizer}
-        handleLogout={handleLogout}
-      />
+      <main className={`main-content`}>
+        <SideMenuBar />
 
-      <main className="main-content">
-        {activeSection === "home" && (
-          <Homepage username={username} role={role} />
-        )}
+        <div className="main-content-wrap">
+          {activeSection === "home" && (
+            <Homepage username={username} role={role} />
+          )}
 
-        {activeSection === "about" && <AboutPage />}
+          {activeSection === "about" && <AboutPage />}
 
-        {activeSection === "create" && <CreateEvent />}
+          {activeSection === "create" && <CreateEvent />}
 
-        {activeSection === "register" && (
-          <section>
-            <RegisterEvent />
-          </section>
-        )}
+          {activeSection === "register" && (
+            <section>
+              <RegisterEvent />
+            </section>
+          )}
 
-        {activeSection === "events" && (
-          <UpcomingEvents upcomingEvents={upcomingEvents} />
-        )}
+          {activeSection === "events" && (
+            <UpcomingEvents />
+          )}
 
-        {activeSection === "myEvents" && (
-          <section>
-            <h2 style={{ textAlign: "center" }}>My Events</h2>
-            {role === "organizer" ? <OrganizerEvents /> : <AttendeeEvents />}
-          </section>
-        )}
+          {activeSection === "myEvents" && (
+            <section>
+              <h2 style={{ textAlign: "center" }}>My Events</h2>
+              {role === "organizer" ? <OrganizerEvents /> : <AttendeeEvents />}
+            </section>
+          )}
+        </div>
       </main>
     </div>
   );

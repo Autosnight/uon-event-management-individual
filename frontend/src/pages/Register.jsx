@@ -3,7 +3,7 @@ import "../styles/pages/auth-glass.css";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import FormButton from "../components/FormButton";
+import FormButton from "../components/Button/FormButton";
 import ValidatedInput from "../components/ValidatedInput";
 
 export default function Register() {
@@ -111,11 +111,6 @@ export default function Register() {
           </ValidatedInput>
 
           <div className="button-group">
-            {/* <FormButton
-              text="Login"
-              color="green"
-              onClick={() => navigate("/")}
-            /> */}
             <FormButton text="Register" color="blue" type="submit" />
           </div>
           <div className="auth-links">

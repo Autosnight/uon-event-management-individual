@@ -1,8 +1,8 @@
 export default function Homepage({ username, role }) {
   return (
-          <section>
+          <section id="main-content"> 
             <div className="dashboard-root">
-              <div clasName="welcome-text">
+              <div className="welcome-text">
                 <h1>Hi {username}, welcome to NewyEvents!</h1>
                 <h3>
                   Our trustworthy event management platform. Your experience
@@ -99,13 +99,13 @@ export default function Homepage({ username, role }) {
                 <br />
               </div>
 
-              <div className="signature-block">
+              {/* <div className="signature-block">
                 <img src="/imagege.png" alt="signature" />
                 <div>
                   <strong>uon Event Management</strong>
                 </div>
                 <div>NewyEvents@newcastle.au</div>
-              </div>
+              </div> */}
             </div>
           </section>
   );

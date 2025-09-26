@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 import "../styles/pages/ticketTypeTable.css";
 import ButtonConfirm from "../components/ButtonConfirm";
 import openImageViewer from "../components/ImageViewer";
@@ -8,6 +9,7 @@ import { isUpcoming } from "../components/IsUpcoming";
 
 export default function OrganizerEvents() {
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,8 +42,7 @@ export default function OrganizerEvents() {
   };
 
   const handleEdit = (event) => {
-    // navigate or open modal; stubbed for now
-    // e.g., navigate(`/organizer/events/${event._id}/edit`);
+    navigate(`/organizer/events/${event._id}/edit`, { state: { event } });
     console.log("Edit event", event);
   };
 

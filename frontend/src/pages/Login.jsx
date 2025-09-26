@@ -3,7 +3,7 @@ import "../styles/pages/auth-glass.css";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import FormButton from "../components/FormButton";
+import FormButton from "../components/Button/FormButton";
 import ValidatedInput from "../components/ValidatedInput";
 
 import { useStateContext } from "../context/StateContext";
@@ -38,8 +38,7 @@ export default function Login() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("role", res.data.role);
-      navigate("/dashboard");
-      setActiveSection("home");
+      navigate("/home");
     } catch (err) {
       alert(err.response?.data?.error || "Login failed");
     }

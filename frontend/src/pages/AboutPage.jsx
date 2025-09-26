@@ -1,7 +1,7 @@
 import { aboutParagraphs, termsNConditions } from "./AboutPageContent";
 export default function AboutPage() {
   return (
-    <section>
+    <section id="main-content">
       <h2>➤About</h2>
 
       {aboutParagraphs.map((para, idx) => (

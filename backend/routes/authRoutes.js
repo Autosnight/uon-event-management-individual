@@ -13,7 +13,11 @@ const { register,
     createEvent,
     registerForEvent,
     cancelForEvent,
-    deleteEvent
+    deleteEvent,
+    editEvent,
+    enable2FA,
+    disable2FA,
+    get2FAStatus
 } = require('../controllers/authController');
 
 // multer config
@@ -60,5 +64,10 @@ router.post('/events/register/:id', authMiddleware, registerForEvent);
 router.post('/events/cancel/:id', authMiddleware, cancelForEvent);
 
 router.delete('/organizer/delete-event/:id', authMiddleware, deleteEvent);
+router.put('/organizer/update-event/:id', authMiddleware, editEvent);
+
+router.post('/2fa/enable', authMiddleware, enable2FA);
+router.post('/2fa/disable', authMiddleware, disable2FA);
+router.get('/2fa/status', authMiddleware, get2FAStatus);
 
 module.exports = router;

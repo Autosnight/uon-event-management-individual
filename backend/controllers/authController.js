@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const { randomBytes, createHash } = require('crypto');
 const { sendMail } = require('../utils/mailer');
 
-
 const getUpcomingEvents = async (req, res) => {
   try {
     const events = await Event.find({ date: { $gte: new Date() } })
@@ -280,6 +279,94 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const editEvent = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const event = await Event.findById(eventId);
+    if (!event) return res.status(404).json({ error: 'Event not found' });
+
+    const b = req.body || {};
+    const update = {};
+
+    // 基础字段
+    if (typeof b.name !== 'undefined') update.name = String(b.name).trim();
+    if (typeof b.date !== 'undefined') update.date = b.date;             // 前端已是 yyyy-mm-dd
+    if (typeof b.time !== 'undefined') update.time = b.time;
+    if (typeof b.venue !== 'undefined') update.venue = String(b.venue).trim();
+    if (typeof b.description !== 'undefined') update.description = b.description;
+
+    // 票种：兼容字符串(JSON)/数组
+    if (typeof b.tickets !== 'undefined') {
+      let tickets = b.tickets;
+      if (typeof tickets === 'string') {
+        try { tickets = JSON.parse(tickets); } catch { }
+      }
+      if (!Array.isArray(tickets)) tickets = [];
+      update.tickets = tickets;
+    }
+
+    const updated = await Event.findByIdAndUpdate(eventId, update, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({ message: 'Event updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update event' });
+  }
+}
+
+const enable2FA = async (req, res) => {
+  console.log("enable2FA called");
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    user.is2FAEnabled = true;
+    await user.save();
+  } catch (error) {
+    res.status(500).json({ error: 'Enabling 2FA setting failed...' });
+  }
+}
+
+const disable2FA = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    user.is2FAEnabled = false;
+    await user.save();
+  } catch (error) {
+    res.status(500).json({ error: 'Disabling 2FA setting failed...' });
+  }
+}
+
+const get2FAStatus = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    if (typeof user.is2FAEnabled === 'undefined') {
+      console.log("is2FAEnabled field not found, setting to false by default");
+      user.is2FAEnabled = false;
+      await user.save();
+    }
+    res.json({ value: !!user.is2FAEnabled });
+
+    console.log("is2FAEnabled: " + !!user.is2FAEnabled);
+  } catch (error) {
+    res.status(500).json({ error: 'Fetching 2FA setting failed...' });
+  }
+}
+
 module.exports = {
   register,
   verifyEmail,
@@ -292,5 +379,9 @@ module.exports = {
   createEvent,
   registerForEvent,
   cancelForEvent,
-  deleteEvent
+  deleteEvent,
+  editEvent,
+  enable2FA,
+  disable2FA,
+  get2FAStatus
 };

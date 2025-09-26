@@ -2,14 +2,11 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/pages/CreateEvent.css";
 import { useStateContext } from "../context/StateContext";
-import iconLeft from "../assets/icons/left-arrow.ico";
 import iconRight from "../assets/icons/right-arrow.ico";
-
-import { useHeightVar } from "../components/UseHeightVar";
 import { useSizeVars } from "../components/UseSizeVars";
-
 import axios from "axios";
 
+//TODO: Change the input box into an input line; retain the textarea and date/time; redesign tickets page
 export default function CreateEvent() {
   const { setActiveSection } = useStateContext();
   const navigate = useNavigate();
@@ -26,8 +23,43 @@ export default function CreateEvent() {
   ]);
 
   const [images, setImages] = useState([]);
-  const [step, setStep] = useState(0); // 0..5：name/date/time/venue/desc+images/tickets
-  const totalSteps = 6;
+  const [step, setStep] = useState(0); // 0..6：name/date/time/venue/desc/images/tickets
+  const totalSteps = 7;
+  const stepLabels = [
+    "Event Name",
+    "Date",
+    "Time",
+    "Venue",
+    "Description (Optional)",
+    "Images (Optional)",
+    "Tickets",
+  ];
+
+  const stepFields = [
+    {
+      tag: "input",
+      type: "text",
+      key: "name",
+      placeholder: "Enter event name",
+      value: formData.name,
+    },
+    { tag: "input", type: "date", key: "date", value: formData.date },
+    { tag: "input", type: "time", key: "time", value: formData.time },
+    {
+      tag: "input",
+      type: "text",
+      key: "venue",
+      placeholder: "Enter event venue",
+      value: formData.venue,
+    },
+    {
+      tag: "textarea",
+      type: "text",
+      key: "description",
+      value: formData.description,
+    },
+    { tag: "input", type: "text", key: "tickets", value: formData.ticketTypes },
+  ];
 
   const cleanTickets = useMemo(
     () => ticketTypes.filter((t) => t.type.trim() && t.count > 0),
@@ -41,6 +73,7 @@ export default function CreateEvent() {
     () => !!formData.time, // step 2
     () => formData.venue.trim().length > 0, // step 3
     () => true, // step 4 (说明/图片可选)
+    () => true,
     () => cleanTickets.length > 0, // step 5
   ];
 
@@ -50,9 +83,13 @@ export default function CreateEvent() {
   const prev = () => setStep((s) => Math.max(0, s - 1));
   const next = () => canNext && setStep((s) => Math.min(totalSteps - 1, s + 1));
 
-  const wizardMainRef = useRef(null);
-  const wizardBodyRef = useRef(null);
-  useSizeVars(wizardBodyRef, { wVar: "--body-width", hVar: "--body-height" }, wizardMainRef);
+  const ParentRef = useRef(null);
+  const ChildRef = useRef(null);
+  useSizeVars(
+    ChildRef,
+    { wVar: "--body-width", hVar: "--body-height" },
+    ParentRef
+  );
   const onPickImages = (e) => {
     setImages(Array.from(e.target.files || []));
   };
@@ -135,103 +172,62 @@ export default function CreateEvent() {
   }
 
   return (
-    <div className="wizard-wrap">
-      <div className="wizard-aside">
-        <ol className="v-steps">
-          {Array.from({ length: totalSteps }).map((_, i) => (
-            <li
-              key={i}
-              className={`${i === step ? "active" : ""} ${
-                i < step ? "done" : ""
-              }`}
-            >
-              {i + 1}
-            </li>
-          ))}
-        </ol>
-      </div>
+    <div id="main-content">
+      <div className="wizard-wrap">
+        <div className="wizard-aside">
+          <ul>
+            {Array.from({ length: totalSteps }).map((_, i) => (
+              <React.Fragment key={i}>
+                <li key={i} className="menu-item">
+                  <span className="menu-text">{stepLabels[i]}</span>
+                </li>
+              </React.Fragment>
+            ))}
+          </ul>
+        </div>
 
-      <div ref={wizardMainRef} className="wizard-main">
-        <div ref={wizardBodyRef} className="wizard-body">
-          {step === 0 && (
-            <div className="field field-inset">
-              <label htmlFor="name" className="inset-label">
-                Event Name :
+        <div className="wizard-main" ref={ParentRef}>
+          {step < 4 && (
+            <React.Fragment>
+              <label
+                htmlFor={stepFields[step].key}
+                className="inset-label"
+                ref={ChildRef}
+              >
+                {step === 0 && <h1>Event Name</h1>}
+                {step === 1 && <h1>Date</h1>}
+                {step === 2 && <h1>Time</h1>}
+                {step === 3 && <h1>Venue</h1>}
               </label>
-              <input
-                id="name"
-                className="big-input"
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter event name"
-                autoFocus
-                required
-              />
-            </div>
-          )}
-
-          {step === 1 && (
-            <div className="field field-inset">
-              <label htmlFor="date" className="inset-label">
-                Date :
-              </label>
-              <input
-                id="date"
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                autoFocus
-                required
-              />
-            </div>
-          )}
-
-          {step === 2 && (
-            <div className="field field-inset">
-              <label htmlFor="time" className="inset-label">
-                Time :
-              </label>
-              <input
-                id="time"
-                type="time"
-                name="time"
-                value={formData.time}
-                onChange={handleChange}
-                autoFocus
-                required
-              />
-            </div>
-          )}
-
-          {step === 3 && (
-            <div className="field field-inset">
-              <label htmlFor="venue" className="inset-label">
-                Venue :
-              </label>
-              <input
-                id="venue"
-                type="text"
-                name="venue"
-                value={formData.venue}
-                onChange={handleChange}
-                placeholder="Enter event venue"
-                autoFocus
-                required
-              />
-            </div>
+              <div className="input-box">
+                <input
+                  id={stepFields[step].key}
+                  className="big-input"
+                  type={stepFields[step].type}
+                  name={stepFields[step].key}
+                  value={stepFields[step].value}
+                  onChange={handleChange}
+                  placeholder={stepFields[step].placeholder}
+                  autoFocus
+                  required
+                />
+              </div>
+            </React.Fragment>
           )}
 
           {step === 4 && (
-            <>
-              <div className="field field-inset">
-                <label htmlFor="description" className="inset-label">
-                  Description (optional) :
-                </label>
+            <React.Fragment>
+              <label
+                htmlFor="description"
+                className="inset-label"
+                ref={ChildRef}
+              >
+                <h1>Description (optional)</h1>
+              </label>
+              <div className="input-box">
                 <textarea
                   id="description"
+                  className="big-input"
                   name="description"
                   rows="4"
                   value={formData.description}
@@ -239,12 +235,18 @@ export default function CreateEvent() {
                   placeholder="Enter description"
                 />
               </div>
-              <div className="field field-inset">
-                <label htmlFor="images" className="inset-label">
-                  Event Images (optional) :
-                </label>
+            </React.Fragment>
+          )}
+
+          {step === 5 && (
+            <React.Fragment>
+              <label htmlFor="images" className="inset-label" ref={ChildRef}>
+                <h1>Event Images (optional)</h1>
+              </label>
+              <div className="input-box">
                 <input
                   id="images"
+                  className="big-input"
                   type="file"
                   accept="image/*"
                   multiple
@@ -252,113 +254,108 @@ export default function CreateEvent() {
                   onChange={onPickImages}
                 />
               </div>
-            </>
+            </React.Fragment>
           )}
 
-          {step === 5 && (
-            <div className="field field-inset">
+          {step === 6 && (
+            <React.Fragment>
               <label className="inset-label">
-                Ticket Types / Numbers / Price
+                <h1>Ticket Info</h1>
               </label>
-              <div className="ticket-grid">
-                <div className="th">Type</div>
-                <div className="th">Qty</div>
-                <div className="th">Price</div>
-                <div className="th"></div>
+              <div className="input-box">
+                <div className="ticket-grid">
+                  <div className="th">Type</div>
+                  <div className="th">Qty</div>
+                  <div className="th">Price</div>
+                  <div className="th"></div>
 
-                {ticketTypes.map((t, i) => (
-                  <React.Fragment key={i}>
-                    <input
-                      className="td"
-                      type="text"
-                      value={t.type}
-                      onChange={(e) =>
-                        handleTicketTypeChange(i, e.target.value)
-                      }
-                      placeholder="e.g. General, VIP"
-                    />
-                    <input
-                      className="td"
-                      type="number"
-                      min="0"
-                      step="1"
-                      value={t.count}
-                      onChange={(e) =>
-                        handleTicketCountChange(i, e.target.value)
-                      }
-                      placeholder="Qty"
-                    />
-                    <input
-                      className="td"
-                      type="number"
-                      min="0"
-                      step="0.5"
-                      value={t.price}
-                      onChange={(e) =>
-                        handleTicketPriceChange(i, e.target.value)
-                      }
-                      placeholder="Price"
-                    />
-                    <div className="td actions">
-                      {ticketTypes.length > 1 && (
-                        <button
-                          type="button"
-                          className="btn btn-ghost"
-                          onClick={() => removeTicketType(i)}
-                        >
-                          −
-                        </button>
-                      )}
-                      {i === ticketTypes.length - 1 && (
-                        <button
-                          type="button"
-                          className="btn btn-ghost"
-                          onClick={addTicketType}
-                        >
-                          +
-                        </button>
-                      )}
-                    </div>
-                  </React.Fragment>
-                ))}
+                  {ticketTypes.map((t, i) => (
+                    <React.Fragment key={i}>
+                      <input
+                        className="td"
+                        type="text"
+                        value={t.type}
+                        onChange={(e) =>
+                          handleTicketTypeChange(i, e.target.value)
+                        }
+                        placeholder="e.g. General, VIP"
+                      />
+                      <input
+                        className="td"
+                        type="number"
+                        min="0"
+                        step="1"
+                        value={t.count}
+                        onChange={(e) =>
+                          handleTicketCountChange(i, e.target.value)
+                        }
+                        placeholder="Qty"
+                      />
+                      <input
+                        className="td"
+                        type="number"
+                        min="0"
+                        step="0.5"
+                        value={t.price}
+                        onChange={(e) =>
+                          handleTicketPriceChange(i, e.target.value)
+                        }
+                        placeholder="Price"
+                      />
+                      <div className="td actions">
+                        {ticketTypes.length > 1 && (
+                          <button
+                            type="button"
+                            className="btn btn-ghost"
+                            onClick={() => removeTicketType(i)}
+                          >
+                            −
+                          </button>
+                        )}
+                        {i === ticketTypes.length - 1 && (
+                          <button
+                            type="button"
+                            className="btn btn-ghost"
+                            onClick={addTicketType}
+                          >
+                            +
+                          </button>
+                        )}
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
-            </div>
+            </React.Fragment>
           )}
-        </div>
 
-        <div className="wizard-navrow">
-          <div className="nav-left">
-            <button
-              type="button"
-              className="arrow-btn"
-              onClick={prev}
-              disabled={step === 0}
-              aria-label="Previous"
-            >
-              <img src={iconLeft} alt="" />
-            </button>
-            {/* <button
-                  type="button"
-                  className="link-cancel"
-                  onClick={() => {
-                    navigate("/dashboard");
-                    setActiveSection("home");
-                  }}
-                >
-                  Cancel
-                </button> */}
-          </div>
+          <div className="nav-bottom-wrapper">
+            {" "}
+            <div className="nav-bottom">
+              <button
+                type="button"
+                className="arrow-btn"
+                onClick={prev}
+                disabled={step === 0}
+                aria-label="Previous"
+              >
+                <img className="flip-x" src={iconRight} alt="" />
+              </button>
 
-          <div className="nav-right">
-            <button
-              type="button"
-              className={`arrow-btn`}
-              onClick={() => (isLast ? handleSubmit() : next())}
-              disabled={!canNext}
-              aria-label={isLast ? "Submit" : "Next"}
-            >
-              {isLast ? "Submit" : <img src={iconRight} alt="" />}
-            </button>
+              <div className="step-indicator" aria-live="polite">
+                {step + 1} / {totalSteps}
+              </div>
+
+              <button
+                type="button"
+                className={`arrow-btn ${isLast ? "primary submit" : ""}`}
+                onClick={() => (isLast ? handleSubmit() : next())}
+                disabled={!canNext}
+                aria-label={isLast ? "Submit" : "Next"}
+              >
+                {isLast ? "Submit" : <img src={iconRight} alt="" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>

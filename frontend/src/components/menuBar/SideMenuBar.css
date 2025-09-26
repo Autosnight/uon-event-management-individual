@@ -1,0 +1,35 @@
+.sidebar {
+  justify-content: flex-start;
+  position: sticky;
+  top: 80px;
+  left: 0;
+  display: grid;
+  align-self: auto;
+  background-color: #363634;
+  border-radius: 8px;
+  transition: width 0.2s ease;
+  box-shadow: 3px 4px 16px rgba(4, 106, 214, 0.4);
+
+  ul {
+    padding: 0;
+  }
+
+  .menu-item-2 {
+    display: grid;
+    white-space: nowrap;
+    height: 20px;
+  }
+}
+
+.sidebar.hidden {
+  visibility: hidden;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.menu-a {
+  display: flex;
+}
